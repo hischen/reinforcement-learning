@@ -1,8 +1,10 @@
-"""REINFORCE算法实现。"""
+"""REINFORCE算法实现。
+REINFORCE 用实际观测的回报 u 近似 Qπ(s,a)"""
+
 import argparse
 import os
 from collections import defaultdict
-import gym
+import gymnasium as gym
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -59,7 +61,7 @@ class REINFORCE_with_Baseline:
         # 累积奖励。
         r_lst = []
         R = 0
-        for i in reversed(range(len(br))):
+        for i in reversed(range(len(br))):  # 从最后一步算起
             R = self.args.discount * R + br[i]
             r_lst.append(R)
         r_lst.reverse()
@@ -73,7 +75,7 @@ class REINFORCE_with_Baseline:
         # 累积奖励。
         r_lst = []
         R = 0
-        for i in reversed(range(len(br))):
+        for i in reversed(range(len(br))):      # 从最后一步算起
             R = self.args.discount * R + br[i]
             r_lst.append(R)
         r_lst.reverse()
@@ -258,6 +260,8 @@ if __name__ == "__main__":
     agent = REINFORCE_with_Baseline(args)
 
     if args.do_train:
+        if not os.path.exists(args.output_dir):
+            os.makedirs(args.output_dir)
         train(args, env, agent)
 
     if args.do_eval:

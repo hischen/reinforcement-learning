@@ -5,7 +5,7 @@ from collections import defaultdict
 import os
 import random
 from dataclasses import dataclass, field
-import gym
+import gymnasium as gym
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -144,8 +144,6 @@ def train(args, env, agent):
 
             # 如果得分更高，保存模型。
             if episode_reward > max_episode_reward:
-                if not os.path.exists(args.output_dir):
-                    os.makedirs(args.output_dir)
                 save_path = os.path.join(args.output_dir, "model.bin")
                 torch.save(agent.Q.state_dict(), save_path)
                 max_episode_reward = episode_reward
@@ -234,6 +232,8 @@ def main():
     agent.target_Q.to(args.device)
 
     if args.do_train:
+        if not os.path.exists(args.output_dir):
+            os.makedirs(args.output_dir)
         train(args, env, agent)
 
     if args.do_eval:

@@ -6,7 +6,7 @@ import argparse
 import os
 import random
 from collections import defaultdict
-import gym
+import gymnasium as gym
 import matplotlib.pyplot as plt
 import numpy as np
 

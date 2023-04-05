@@ -2,7 +2,7 @@ import argparse
 import os
 import random
 from dataclasses import dataclass, field
-import gym
+import gymnasium as gym
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
